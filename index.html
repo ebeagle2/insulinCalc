@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=7,IE=8,IE=9,IE=10" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <title>Insulin Dosing Guide</title>
+        <style>
+            html,body {
+                height: 100%;
+                width: auto;
+                padding: 8px;
+                text-align: center;
+                font: 20px Arial, sans-serif
+            }
+            #container {
+                text-align: center;
+            }
+            #bsInput {
+                width: 60%;
+                height: 34px;
+                font: 30px Arial, sans-serif;
+                color: red;
+                border: 1px solid red;
+                text-align: center;
+            }
+            #calcDose {
+                width: 60%;
+                height: 34px;
+                font: 20px Arial, sans-serif;
+                color: white;
+                border: 1px solid green;
+                text-align: center;
+                background-color: green;
+            }
+            #doseResult {
+                display: none;
+            }
+            #doseDiv {
+                width: auto;
+                height: auto;
+                font: 40px Arial, sans-serif;
+                color: blue;
+                border: 1px solid blue;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            <h1>Fast-Acting<br>Insulin Dosing Guide</h1>
+            <p>
+                Enter your blood sugar reading in the box below:
+            </p>
+            <input type="number" id="bsInput" placeholder="Type # here" onClick="this.value=''"></input>
+            <br><br>
+            <button id="calcDose" onclick="calcDose()">Calculate</button>
+            <br>
+            <div id="doseResult">
+                <p id="doseText"></p>
+                <div id="doseDiv">
+                    <label id="dose"></label>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        function calcDose() {
+            var bs = document.getElementById("bsInput").value;
+            console.log(bs);
+        
+            var dose = Math.round((bs - 100)/40);
+            console.log('Dose is: '+ dose);
+            
+            if (dose < 0) {
+                document.getElementById('doseResult').style.display = 'inline';
+                document.getElementById('dose').innerHTML = 'Please enter your blood sugar reading.';
+                console.log('Your dose is '+ dose + ' units.');
+            } else if (dose >= 0) {
+                document.getElementById('doseResult').style.display = 'inline';
+                document.getElementById('dose').innerHTML = 'Your dose is '+ dose +' units.';
+                console.log('Your dose is '+ dose + ' units.');
+            } else {
+                console.log('Something went wrong... please try again');
+            }
+             
+        }
+        
+        document.getElementById("bsInput")
+            .addEventListener("keyup", function(event) {
+            event.preventDefault();
+                if (event.keyCode == 13) {
+                    document.getElementById("calcDose").click();
+                }
+            });
+    </script>
+</html>
